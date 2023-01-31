@@ -15,6 +15,15 @@ De dropout staat op 0.5, hij heeft in een blog gelezen dat dit de beste settings
 - Wat vind je van de architectuur die hij heeft uitgekozen (een Neuraal netwerk met drie Linear layers)? Wat zijn sterke en zwakke kanten van een model als dit in het algemeen? En voor dit specifieke probleem?
 - Wat vind je van de keuzes die hij heeft gemaakt in de LinearConfig voor het aantal units ten opzichte van de data? En van de dropout?
 
+ ## <span style="color:Green">Antwoord 1a</span>
+- Input=13, Goede keuze. Is gelijk aan het aantal attributen. 
+- Output=20, Goede keuze. Is gelijk aan het aantal classes. 
+- H1=100, Goede keuze. Persoonlijk kies ik voor het aantal 128 puur uit gewenning en aangeleerd in de cursus Machine Learning. Daarnast zal ik gaan experimenteren met het aantal units. Bijvoorbeeld door te verhogen naar 256 of verlagen naar 64.
+- H2=10, Matige keuze. 
+- Dropout=0.5 Matige keuze. Ik zal kiezen voor een dropout van 0.2. Op basis van de grootte van de dataset. En op basis van advies van de docent in de cursus ML. 
+
+
+
 ## 1b
 Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`) dan kun je zien dat het eerste dat hij doet `x.mean(dim=1)` is. 
 
