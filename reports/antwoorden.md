@@ -31,6 +31,13 @@ Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`)
 - Hoe had hij dit ook kunnen oplossen?
 - Wat zijn voor een nadelen van de verschillende manieren om deze stap te doen?
 
+ ## <span style="color:Green">Antwoord 1b</span>
+ Het effect is dat het aantal dimensies wordt teruggebracht. Dit door het gemiddelde te nemen van dimensie 1. (De dim-parameter bepaalt over welke dimensie de bewerkingen worden uitgevoerd.)
+
+ Andere oplossing zou kunnen zijn flatten of avarage pooling
+
+ Voor en nadelen.
+
 ### 1c
 Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitleggen wat een betere architectuur zou zijn.
 
