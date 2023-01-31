@@ -6,7 +6,7 @@ In [references/documentation.html](references/documentation.html) lees je o.a. d
 Jouw junior collega heeft een neuraal netwerk gebouwd, maar het lukt hem niet om de accuracy boven de 67% te krijgen. Aangezien jij de cursus Machine Learning bijna succesvol hebt afgerond hoopt hij dat jij een paar betere ideeen hebt.
 
 ## Vraag 1
-
+---
 ### 1a
 In `dev/scripts` vind je de file `01_model_design.py`.
 Het model in deze file heeft in de eerste hidden layer 100 units, in de tweede layer 10 units, dit heeft jouw collega ergens op stack overflow gevonden en hij had gelezen dat dit een goed model zou zijn.
@@ -15,15 +15,29 @@ De dropout staat op 0.5, hij heeft in een blog gelezen dat dit de beste settings
 - Wat vind je van de architectuur die hij heeft uitgekozen (een Neuraal netwerk met drie Linear layers)? Wat zijn sterke en zwakke kanten van een model als dit in het algemeen? En voor dit specifieke probleem?
 - Wat vind je van de keuzes die hij heeft gemaakt in de LinearConfig voor het aantal units ten opzichte van de data? En van de dropout?
 
+
  ## <span style="color:Green">Antwoord 1a</span>
+
+Ik vind de architectuur die mijn collega gekozen heeft een begrijpelijke keuze. Aangezien  het een eenvoudige architectuur is en relatief makkelijk toe te passen model is. Wel vraag ik mij af of dit de juiste keuze is voor dit specifieke probleem.
+
+Sterke kanten: 
+- De eenvoud helpt om overfitting te voorkomen.
+- Het model is snel en is ideaal als 'baselinemodel'. 
+
+Zwakke kanten: 
+- Sluit niet 'goed' aan op dataset met met groot aantal features en meer dan twee dimensies.
+
+Voor de aangeleverde dataset en dit specifieke probleem levert het gekozen linear model waarschijnlijk problemen op. Dit model kan moeilijk omgaan met drie dimensies. De dataset bestaat uit drie dimensies (timeseries). Mijn advies zou zijn om een RNN model te gebruiken. Een RNN model is geschikt voor drie dimensies.
+
+De keuzes van de LinearConfig:
 - Input=13, Goede keuze. Is gelijk aan het aantal attributen. 
 - Output=20, Goede keuze. Is gelijk aan het aantal classes. 
 - H1=100, Goede keuze. Persoonlijk kies ik voor het aantal 128 puur uit gewenning en aangeleerd in de cursus Machine Learning. Daarnast zal ik gaan experimenteren met het aantal units. Bijvoorbeeld door te verhogen naar 256 of verlagen naar 64.
 - H2=10, Matige keuze. 
-- Dropout=0.5 Matige keuze. Ik zal kiezen voor een dropout van 0.2. Op basis van de grootte van de dataset. En op basis van advies van de docent in de cursus ML. 
+- Dropout=0.5 Matige keuze. Hierbij valt de helft af. Ik zal kiezen voor een dropout van 0.2. Op basis van de grootte van de dataset. 
+---
 
-
-
+---
 ## 1b
 Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`) dan kun je zien dat het eerste dat hij doet `x.mean(dim=1)` is. 
 
@@ -32,19 +46,39 @@ Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`)
 - Wat zijn voor een nadelen van de verschillende manieren om deze stap te doen?
 
  ## <span style="color:Green">Antwoord 1b</span>
- Het effect is dat het aantal dimensies wordt teruggebracht. Dit door het gemiddelde te nemen van dimensie 1. (De dim-parameter bepaalt over welke dimensie de bewerkingen worden uitgevoerd.)
+ - Het effect is dat het aantal dimensies wordt teruggebracht. Dit door het gemiddelde te nemen van dimensie 1. (De dim-parameter bepaalt over welke dimensie de bewerkingen worden uitgevoerd.) 
 
- Andere oplossing zou kunnen zijn flatten of avarage pooling
+ -  Het probleem dat hij hiermee wil oplossen is het aansluiten van de data op het model. Het model gebruikt door mijn collega sluit aan op data met twee dimensies. Terwijl de aangeleverde data bestaat uit drie diemensies
+  
+  - Het bijkomend probleem dat mijn collega hiermee oplost is ook wel bekend onder het fenomeen: "The curse of dimensionality”. In het kort: een dataset met uitgebreide features maakt het voorspellen door het model lastig, waardoor de performance en nauwkeurigheid in gevaar komen. 
 
- Voor en nadelen.
+- Een andere oplossing zou kunnen zijn om flatten toe te passen.
 
+### Voordeel mean
+Reductie in features naar 1. Perfomance gaat omhoog.
+
+### Nadeel mean
+Features worden samengevat naar een gemiddelde. Dit leidt tot minder accurate input.
+
+### Voordeel flatten
+Alle informatie wordt vastgehouden. Er verdwijnen geen features. 
+### Nadeel flatten
+Meer features kan leiden tot performance uitdagingen.
+
+
+---
+---
 ### 1c
 Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitleggen wat een betere architectuur zou zijn.
 
 - Beschrijf de architecturen die je kunt overwegen voor een probleem als dit. Het is voldoende als je beschrijft welke layers in welke combinaties je zou kunnen gebruiken.
+
 - Geef vervolgens een indicatie en motivatie voor het aantal units/filters/kernelsize etc voor elke laag die je gebruikt, en hoe je omgaat met overgangen (bv van 3 naar 2 dimensies). Een indicatie is bijvoorbeeld een educated guess voor een aantal units, plus een boven en ondergrens voor het aantal units. Met een motivatie laat je zien dat jouw keuze niet een random selectie is, maar dat je 1) andere problemen hebt gezien en dit probleem daartegen kunt afzetten en 2) een besef hebt van de consquenties van het kiezen van een range.
 - Geef aan wat jij verwacht dat de meest veelbelovende architectuur is, en waarom (opnieuw, laat zien dat je niet random getallen noemt, of keuzes maakt, maar dat jij je keuze baseert op ervaring die je hebt opgedaan met andere problemen).
 
+## <span style="color:Green">Antwoord 1c</span>
+
+---
 ### 1d
 Implementeer jouw veelbelovende model: 
 
