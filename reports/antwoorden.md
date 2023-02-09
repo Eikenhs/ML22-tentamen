@@ -30,11 +30,11 @@ Zwakke kanten:
 Voor de aangeleverde dataset en dit specifieke probleem levert het gekozen linear model waarschijnlijk problemen op. Dit model kan moeilijk omgaan met drie dimensies. De dataset bestaat uit drie dimensies (timeseries). Mijn advies zou zijn om een RNN model te gebruiken. Een RNN model is geschikt voor drie dimensies.
 
 De keuzes van de LinearConfig:
-- Input=13, Goede keuze. Is gelijk aan het aantal attributen. 
-- Output=20, Goede keuze. Is gelijk aan het aantal classes. 
-- H1=100, Goede keuze. Persoonlijk kies ik voor het aantal 128 puur uit gewenning en aangeleerd in de cursus Machine Learning. Daarnast zal ik gaan experimenteren met het aantal units. Bijvoorbeeld door te verhogen naar 256 of verlagen naar 64.
-- H2=10, Matige keuze. 
-- Dropout=0.5 Matige keuze. Hierbij valt de helft af. Ik zal kiezen voor een dropout van 0.2. Op basis van de grootte van de dataset. 
+- Input=13, --> Goede keuze. Is gelijk aan het aantal attributen. 
+- Output=20, --> Goede keuze. Is gelijk aan het aantal classes. 
+- H1=100, --> Goede keuze. Persoonlijk kies ik voor het aantal 128 puur uit gewenning en aangeleerd in de cursus Machine Learning. Daarnast zal ik gaan experimenteren met het aantal units. Bijvoorbeeld door te verhogen naar 256 of verlagen naar 64.
+- H2=10, --> Matige keuze. Te klein vergeleken met H1.
+- Dropout=0.5 Matige keuze. Hierbij valt de helft af. De data is al niet groot (8800). Ik zal kiezen voor een dropout van 0.2. Op basis van de grootte van de dataset. 
 ---
 
 ---
@@ -46,11 +46,11 @@ Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`)
 - Wat zijn voor een nadelen van de verschillende manieren om deze stap te doen?
 
  ## <span style="color:Green">Antwoord 1b</span>
- - Het effect is dat het aantal dimensies wordt teruggebracht. Dit door het gemiddelde te nemen van dimensie 1. (De dim-parameter bepaalt over welke dimensie de bewerkingen worden uitgevoerd.) 
+ Het effect is dat het aantal dimensies wordt teruggebracht. Dit door het gemiddelde te nemen van de middelste dimensie. (De dim-parameter bepaalt over welke dimensie de bewerkingen worden uitgevoerd.) 
 
- -  Het probleem dat hij hiermee wil oplossen is het aansluiten van de data op het model. Het model gebruikt door mijn collega sluit aan op data met twee dimensies. Terwijl de aangeleverde data bestaat uit drie diemensies
+ Het probleem dat hij hiermee wil oplossen is het aansluiten van de data op het model. Het model gebruikt door mijn collega sluit aan op data met twee dimensies. Terwijl de aangeleverde data bestaat uit drie diemensies
   
-  - Het bijkomend probleem dat mijn collega hiermee oplost is ook wel bekend onder het fenomeen: "The curse of dimensionality”. In het kort: een dataset met uitgebreide features maakt het voorspellen door het model lastig, waardoor de performance en nauwkeurigheid in gevaar komen. 
+  Het bijkomend probleem dat mijn collega hiermee oplost is ook wel bekend onder het fenomeen: "The curse of dimensionality”. In het kort: een dataset met uitgebreide features maakt het voorspellen door het model lastig, waardoor de performance en nauwkeurigheid in gevaar komen. 
 
 - Een andere oplossing zou kunnen zijn om flatten toe te passen.
 
@@ -73,37 +73,37 @@ Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitlegg
 
 - Beschrijf de architecturen die je kunt overwegen voor een probleem als dit. Het is voldoende als je beschrijft welke layers in welke combinaties je zou kunnen gebruiken.
 
-Betreft een datasetset met time series, drie dimensies en een classificatieprobleem. Als we het schema hieronder volgen dan komen we uit op RNN layers. Hierbij hebben we de keuzen tussen:
-Simple RNN
-LSTM
-GRU
-
-De volgende architectuur zal ik overwegen:
-Starten met een GRU en uiteindelijk eindigen met een linear layer.
-Of starten met RNN en eindigen met linear layer.
-
-
-
-
 - Geef vervolgens een indicatie en motivatie voor het aantal units/filters/kernelsize etc voor elke laag die je gebruikt, en hoe je omgaat met overgangen (bv van 3 naar 2 dimensies). Een indicatie is bijvoorbeeld een educated guess voor een aantal units, plus een boven en ondergrens voor het aantal units. Met een motivatie laat je zien dat jouw keuze niet een random selectie is, maar dat je 1) andere problemen hebt gezien en dit probleem daartegen kunt afzetten en 2) een besef hebt van de consquenties van het kiezen van een range.
-
-
-Input: 13 
-Hidden size: 128
-Output: 20
-Loss funtie: Cross entropy. 
-Optimizer: Adam
-Aantal layers: 
-3 naar 2 dimensies: Door middel van 'flatten'
 
 - Geef aan wat jij verwacht dat de meest veelbelovende architectuur is, en waarom (opnieuw, laat zien dat je niet random getallen noemt, of keuzes maakt, maar dat jij je keuze baseert op ervaring die je hebt opgedaan met andere problemen).
 
 
-
-
 ## <span style="color:Green">Antwoord 1c</span>
+Het betreft een datasetset met time series, drie dimensies en een classificatieprobleem. Als we het schema en recap uit de cursus ML volgen dan komen we uit op RNN (recurrent neural networks) architecturen. Hierbij hebben we de keuze tussen:
+Simple RNN, LSTM en GRU.
+De volgende architectuur zal ik overwegen:
+Starten met een inputlayer dan GRU en uiteindelijk eindigen met een linear layer.
+Of starten met inputlayer dan RNN en eindigen met linear layer.
+
+Hierbij gebruiken we de volgende layers: input - GRU - output. Of input-RNN-output.
+
+De volgende indicatie en motivatie voor het aantal units/filters/kernelsize:
+
+- Input: 13 -> Gelijk gezet aan het aantal attributen
+- Hidden size: 64 --> Niet te *groot* bij hogere hidden size kan de performance onder druk komen door de benodigheid van meer rekenkracht.
+- Output: 20 --> Gelijk gezet aan het aantal classes.
+- Loss funtie: Cross entropy loss --> past bij het probleem,
+- Optimizer: Adam --> bewezen als een van de beste optimizer met lage geheugenvereisten. En wordt in het algemeen gezien als de default optimizer. Tevens heb ik hiermee goede resultaten behaald bij eerdere opdrachten (tussentijdse_opdracht).
+- Aantal layers: 3 of 4 - Genoeg lagen om mee te beginnen en het model te trainen.
+3 naar 2 dimensies?: Door middel van 'flatten'
+
+Ik verwacht onderstaand architectuur als meest veelbelovende:
+De GRU. Betreft een simpele versie avan de LSTM en heeft een hogere snelheid t.o.v. LSTM. De dataset is niet groot en simpel, waardoor LSTM niet nodig is.
+
+
 
 ---
+
 ### 1d
 Implementeer jouw veelbelovende model: 
 
