@@ -32,7 +32,7 @@ Voor de aangeleverde dataset en dit specifieke probleem levert het gekozen linea
 De keuzes van de LinearConfig:
 - Input=13, --> Goede keuze. Is gelijk aan het aantal attributen. 
 - Output=20, --> Goede keuze. Is gelijk aan het aantal classes. 
-- H1=100, --> Goede keuze. Persoonlijk kies ik voor het aantal 128 puur uit gewenning en aangeleerd in de cursus Machine Learning. Daarnast zal ik gaan experimenteren met het aantal units. Bijvoorbeeld door te verhogen naar 256 of verlagen naar 64.
+- H1=100, --> Goede keuze. Persoonlijk kies ik voor het aantal 128 of 64 puur uit gewenning en aangeleerd in de cursus Machine Learning. Daarnast zal ik gaan experimenteren met het aantal units. Bijvoorbeeld door te verhogen naar 256 of verlagen naar 64.
 - H2=10, --> Matige keuze. Te klein vergeleken met H1.
 - Dropout=0.5 Matige keuze. Hierbij valt de helft af. De data is al niet groot (8800). Ik zal kiezen voor een dropout van 0.2. Op basis van de grootte van de dataset. 
 ---
@@ -123,6 +123,9 @@ Hieronder een voorbeeld hoe je een plaatje met caption zou kunnen invoegen.
     </figcaption>
   </p>
 </figure>
+
+## <span style="color:Green">Antwoord 1d</span>
+Model.py en Settings.py aangepast voor het GRU model. Daarnaast gekozen om een nieuw script (model_GRU_design) te maken. Hierdoor kan mijn collega zijn eigen script nog teruglezen ter lering en vermaak. Verder de *Makefile* aangepast om het model te kunnen runnen met bestaand commando.
 
 ## Vraag 2
 Een andere collega heeft alvast een hypertuning opgezet in `dev/scripts/02_tune.py`.
