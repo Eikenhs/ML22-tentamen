@@ -6,7 +6,7 @@ from loguru import logger
 from tentamen.data import datasets
 from tentamen.model import Accuracy
 from tentamen.settings import presets
-from tentamen.train import trainloopp
+from tentamen.train import trainloop
 
 if __name__ == "__main__":
     logger.add(presets.logdir / "01.log")
