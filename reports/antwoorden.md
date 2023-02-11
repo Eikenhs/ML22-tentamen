@@ -98,7 +98,8 @@ De volgende indicatie en motivatie voor het aantal units/filters/kernelsize:
 3 naar 2 dimensies?: Door middel van 'flatten'
 
 Ik verwacht onderstaand architectuur als meest veelbelovende:
-De GRU. Betreft een simpele versie avan de LSTM en heeft een hogere snelheid t.o.v. LSTM. De dataset is niet groot en simpel, waardoor LSTM niet nodig is.
+Een RNN en dan wel de GRU variant. GRU gebruikt minder trainingsparameters en gebruikt zoals gezegd minder geheugen en voert sneller uit dan LSTM, terwijl LSTM nauwkeuriger is op een grotere dataset. De dataset is niet groot en simpel, waardoor LSTM niet nodig is.
+
 
 
 
@@ -138,6 +139,9 @@ Implementeer de hypertuning voor jouw architectuur:
 - voeg jouw model in op de juiste plek in de `tune.py` file.
 - maak een zoekruimte aan met behulp van pydantic (naar het voorbeeld van LinearSearchSpace), maar pas het aan voor jouw model.
 - Licht je keuzes toe: wat hypertune je, en wat niet? Waarom? En in welke ranges zoek je, en waarom? Zie ook de [docs van ray over search space](https://docs.ray.io/en/latest/tune/api_docs/search_space.html#tune-sample-docs) en voor [rondom search algoritmes](https://docs.ray.io/en/latest/tune/api_docs/suggestion.html#bohb-tune-search-bohb-tunebohb) voor meer opties en voorbeelden.
+
+## <span style="color:Green">Antwoord 1d</span>
+Settings.py aangepast.
 
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.

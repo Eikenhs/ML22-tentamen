@@ -6,7 +6,7 @@ from loguru import logger
 from tentamen.data import datasets
 from tentamen.model import Accuracy
 from tentamen.settings import presets
-from tentamen.train import trainloop
+from tentamen.train import trainloopp
 
 if __name__ == "__main__":
     logger.add(presets.logdir / "01.log")
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     configs = [
         GRUmodelConfig(
             input=13, output=20, tunedir=presets.logdir,
-            hidden_size=256, num_layers=4, dropout=0.2
+            hidden_size=256, num_layers=3, dropout=0.2
         ),
     ]
 
