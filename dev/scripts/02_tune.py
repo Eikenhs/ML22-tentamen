@@ -9,8 +9,8 @@ from ray.tune.schedulers.hb_bohb import HyperBandForBOHB
 from ray.tune.search.bohb import TuneBOHB
 
 from tentamen.data import datasets
-from tentamen.model import Accuracy, Linear
-from tentamen.settings import GRUmodelSearchSpace, LinearSearchSpace, presets
+from tentamen.model import Accuracy, GRUmodel #Linearmodel verwijderd
+from tentamen.settings import GRUmodelSearchSpace, presets
 from tentamen.train import trainloop
 
 
@@ -20,10 +20,10 @@ def train(config: Dict) -> None:
     with FileLock(datadir / ".lock"):
         trainstreamer, teststreamer = datasets.get_arabic(presets)
 
-    model = Linear(config)  # type: ignore
+    model = GRUmodel(config)  # type: ignore #Linearmodel vervangen voor GRUmodel
 
     trainloop(
-        epochs=30,
+        epochs=5,
         model=model,  # type: ignore
         optimizer=torch.optim.Adam,
         learning_rate=1e-3,
