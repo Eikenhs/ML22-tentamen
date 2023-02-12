@@ -1,0 +1,8 @@
+{
+  "dropout": 0.35762070991142986,
+  "h1": 67,
+  "h2": 83,
+  "input": 13,
+  "output": 20,
+  "tunedir": "/home/azureuser/code/ML22-tentamen/logs"
+}

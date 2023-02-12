@@ -128,6 +128,8 @@ Hieronder een voorbeeld hoe je een plaatje met caption zou kunnen invoegen.
 ## <span style="color:Green">Antwoord 1d</span>
 Model.py en Settings.py aangepast voor het GRU model. Daarnaast gekozen om een nieuw script (model_GRU_design) te maken. Hierdoor kan mijn collega zijn eigen script nog teruglezen ter lering en vermaak. Verder de *Makefile* aangepast om het model te kunnen runnen met bestaand commando.
 
+
+
 ## Vraag 2
 Een andere collega heeft alvast een hypertuning opgezet in `dev/scripts/02_tune.py`.
 
