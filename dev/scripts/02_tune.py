@@ -10,7 +10,7 @@ from ray.tune.search.bohb import TuneBOHB
 
 from tentamen.data import datasets
 from tentamen.model import Accuracy, Linear
-from tentamen.settings import LinearSearchSpace, presets
+from tentamen.settings import GRUmodelSearchSpace, LinearSearchSpace, presets
 from tentamen.train import trainloop
 
 
@@ -41,11 +41,12 @@ def train(config: Dict) -> None:
 if __name__ == "__main__":
     ray.init()
 
-    config = LinearSearchSpace(
+    config = GRUmodelSearchSpace(
         input=13,
         output=20,
         tunedir=presets.logdir,
     )
+#LinearSearchSpace vervangen voor GRUmodelSearchSpace
 
     reporter = CLIReporter()
     reporter.add_metric_column("Accuracy")

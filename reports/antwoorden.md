@@ -128,6 +128,31 @@ Hieronder een voorbeeld hoe je een plaatje met caption zou kunnen invoegen.
 ## <span style="color:Green">Antwoord 1d</span>
 Model.py en Settings.py aangepast voor het GRU model. Daarnaast gekozen om een nieuw script (model_GRU_design) te maken. Hierdoor kan mijn collega zijn eigen script nog teruglezen ter lering en vermaak. Verder de *Makefile* aangepast om het model te kunnen runnen met bestaand commando.
 
+Wat opvalt is dat bij de 3e run al een accuracy van 96% wordt gehaald.Dit model bevat een hidden size van 256, 4 layers en een dropout van 0.2. Dit model heb ik uiteindelijk nogmaals gerund en werd zelfs een accaracy van **97%** gehaald. 
+
+Verder ben ik een klein beetje doorgeslagen met het aantal runs. Dit is vooral een leerpunt voormijzelf. Niet te lang handmatig tunen. 
+
+De volgende resultaten zijn het opvallendste en per aantal layers gesorteerd.
+
+4 Layers:
+- Accuraatheid 0,94. input=13, output=20,
+hidden_size=64, num_layers=4, dropout=0.2
+- Accuraatheid 0,944. input=13, output=20,
+hidden_size=128, num_layers=4, dropout=0.2
+- Accuraatheid 0,970. input=13, output=20,
+hidden_size=256, num_layers=4, dropout=0.2
+
+3 Layers:
+- Accuraatheid 0,96. input=13, output=20, 
+hidden_size=256, num_layers=3, dropout=0.2
+
+2 Layers: 
+- Accuraatheid 0,95. input=13, output=20, 
+hidden_size=128, num_layers=2, dropout=0.2
+
+In het Tensorboard overzichtplaatje hieronder valt te zien dat de runs bestaan uit 50 epochs. We zie rond 20 a 30 epochs verzadiging ontstaan. 
+
+
 
 
 ## Vraag 2
@@ -142,8 +167,21 @@ Implementeer de hypertuning voor jouw architectuur:
 - maak een zoekruimte aan met behulp van pydantic (naar het voorbeeld van LinearSearchSpace), maar pas het aan voor jouw model.
 - Licht je keuzes toe: wat hypertune je, en wat niet? Waarom? En in welke ranges zoek je, en waarom? Zie ook de [docs van ray over search space](https://docs.ray.io/en/latest/tune/api_docs/search_space.html#tune-sample-docs) en voor [rondom search algoritmes](https://docs.ray.io/en/latest/tune/api_docs/suggestion.html#bohb-tune-search-bohb-tunebohb) voor meer opties en voorbeelden.
 
-## <span style="color:Green">Antwoord 1d</span>
-Settings.py aangepast.
+## <span style="color:Green">Antwoord 2a</span>
+Tune.py en settings.py (onder scripts) aangepast voor het GRU model.
+
+Settings:<br>
+Class GRUmodelConfig(BaseSearchSpace):<br>
+    hidden_size: int <br>
+    num_layers: int <br>
+    dropout: float <br>
+
+Class GRUmodelSearchSpace(BaseSearchSpace):<br>
+    hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256)<br>
+    num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 6)<br>
+    dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.0, 0.5)<br>
+    batchsize: Union[int, SAMPLE_INT] = tune.randint(32, 256)<br>
+    
 
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
