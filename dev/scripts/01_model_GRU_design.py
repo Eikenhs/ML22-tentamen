@@ -19,7 +19,7 @@ if __name__ == "__main__":
     configs = [
         GRUmodelConfig(
             input=13, output=20, tunedir=presets.logdir,
-            hidden_size=128, num_layers=1, dropout=0.2
+            hidden_size=256, num_layers=4, dropout=0.2
         ),
     ]
 
