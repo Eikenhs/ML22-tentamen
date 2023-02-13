@@ -18,23 +18,24 @@ De dropout staat op 0.5, hij heeft in een blog gelezen dat dit de beste settings
 
  ## <span style="color:Green">Antwoord 1a</span>
 
-Ik vind de architectuur die mijn collega gekozen heeft een begrijpelijke keuze. Aangezien  het een eenvoudige architectuur is en relatief makkelijk toe te passen model is. Wel vraag ik mij af of dit de juiste keuze is voor dit specifieke probleem.
+De architectuur die mijn collega gekozen heeft vind ik een begrijpelijke keuze. Hij heeft gekozen voor een eenvoudige architectuur en relatief makkelijk toe te passen model. Wel vraag ik mij af of dit de juiste keuze is voor dit specifieke probleem. 
 
-Sterke kanten: 
+Sterke kante van de gekozen architectuur: 
 - De eenvoud helpt om overfitting te voorkomen.
 - Het model is snel en is ideaal als 'baselinemodel'. 
 
 Zwakke kanten: 
 - Sluit niet 'goed' aan op dataset met met groot aantal features en meer dan twee dimensies.
+- De eenvoud kan er voor zorgen dat patronen in data niet worden gevonden.
 
 Voor de aangeleverde dataset en dit specifieke probleem levert het gekozen linear model waarschijnlijk problemen op. Dit model kan moeilijk omgaan met drie dimensies. De dataset bestaat uit drie dimensies (timeseries). Mijn advies zou zijn om een RNN model te gebruiken. Een RNN model is geschikt voor drie dimensies.
 
-De keuzes van de LinearConfig:
+De keuzes van de junior voor de LinearConfig:
 - Input=13, --> Goede keuze. Is gelijk aan het aantal attributen. 
 - Output=20, --> Goede keuze. Is gelijk aan het aantal classes. 
-- H1=100, --> Goede keuze. Persoonlijk kies ik voor het aantal 128 of 64 puur uit gewenning en aangeleerd in de cursus Machine Learning. Daarnast zal ik gaan experimenteren met het aantal units. Bijvoorbeeld door te verhogen naar 256 of verlagen naar 64.
+- H1=100, --> Goede keuze. Persoonlijk kies ik voor het aantal 128 puur uit gewenning en aangeleerd in de cursus Machine Learning. Daarnast ga ik experimenteren met het aantal units. Bijvoorbeeld door te verhogen naar 256 of verlagen naar 64.
 - H2=10, --> Matige keuze. Te klein vergeleken met H1.
-- Dropout=0.5 Matige keuze. Hierbij valt de helft af. De data is al niet groot (8800). Ik zal kiezen voor een dropout van 0.2. Op basis van de grootte van de dataset. 
+- Dropout=0.5 Matige keuze. Hierbij valt de helft van de data af. De data is al niet groot (8800). Ik zal kiezen voor een dropout van 0.2. Op basis van de grootte van de dataset. En op basis van bewezen resultaten. (Bijvoorbeeld van de tussentijdse opdracht)
 ---
 
 ---
@@ -46,16 +47,16 @@ Als je in de forward methode van het Linear model kijkt (in `tentamen/model.py`)
 - Wat zijn voor een nadelen van de verschillende manieren om deze stap te doen?
 
  ## <span style="color:Green">Antwoord 1b</span>
- Het effect is dat het aantal dimensies wordt teruggebracht. Dit door het gemiddelde te nemen van de middelste dimensie. (De dim-parameter bepaalt over welke dimensie de bewerkingen worden uitgevoerd.) 
+ Het effect is dat het aantal dimensies wordt teruggebracht. Dit door het gemiddelde te nemen van de middelste dimensie. De dim-parameter bepaalt over welke dimensie de bewerkingen worden uitgevoerd.  
 
- Het probleem dat hij hiermee wil oplossen is het aansluiten van de data op het model. Het model gebruikt door mijn collega sluit aan op data met twee dimensies. Terwijl de aangeleverde data bestaat uit drie diemensies
-  
-  Het bijkomend probleem dat mijn collega hiermee oplost is ook wel bekend onder het fenomeen: "The curse of dimensionality”. In het kort: een dataset met uitgebreide features maakt het voorspellen door het model lastig, waardoor de performance en nauwkeurigheid in gevaar komen. 
+ Het probleem dat hij hiermee wil oplossen is dat de data niet goed aansluit op zijn gekozen model. Het model gebruikt door mijn collega sluit aan op data met twee dimensies. Terwijl de aangeleverde data bestaat uit drie diemensies.  
 
-- Een andere oplossing zou kunnen zijn om flatten toe te passen.
+  Het bijkomend probleem dat mijn collega evt. oplost is ook wel bekend onder het fenomeen: "The curse of dimensionality”.  In het kort: een dataset met uitgebreide features maakt het voorspellen door het model lastig, waardoor de performance en nauwkeurigheid in gevaar komen. 
 
-### Voordeel mean
-Reductie in features naar 1. Perfomance gaat omhoog.
+- Een andere oplossing zou kunnen zijn om flatten toe te passen. Of door pooling (max of avarage) te gebruiken.
+
+### Voordeel mean 
+Reductie in features naar één. Snelheid van het model gaat omhoog en minder computerkracht nodig. dan bij flatten.
 
 ### Nadeel mean
 Features worden samengevat naar een gemiddelde. Dit leidt tot minder accurate input.
@@ -65,6 +66,10 @@ Alle informatie wordt vastgehouden. Er verdwijnen geen features.
 ### Nadeel flatten
 Meer features kan leiden tot performance uitdagingen.
 
+### Voordeel  pooling
+Performance verbetering. Helpt vermijden van overfitting.
+### Nadeel pooling
+Veel informatie raakt verloren. Dit kan zorgen veel lagere accuracy.
 
 ---
 ---
@@ -80,12 +85,12 @@ Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitlegg
 
 ## <span style="color:Green">Antwoord 1c</span>
 Het betreft een datasetset met time series, drie dimensies en een classificatieprobleem. Als we het schema en recap uit de cursus ML volgen dan komen we uit op RNN (recurrent neural networks) architecturen. Hierbij hebben we de keuze tussen:
-Simple RNN, LSTM en GRU.
-De volgende architectuur zal ik overwegen:
-Starten met een inputlayer dan GRU en uiteindelijk eindigen met een linear layer.
-Of starten met inputlayer dan RNN en eindigen met linear layer.
+Simple RNN, LSTM en GRU.  
 
-Hierbij gebruiken we de volgende layers: input - GRU - output. Of input-RNN-output.
+De volgende architectuur zal ik overwegen:
+GRU met 3 of 4 layers of een LSTM met 3 of 4 layers.
+
+Hierbij gebruiken we de volgende layers: input - GRU - output. Of input-LSTM-output.
 
 De volgende indicatie en motivatie voor het aantal units/filters/kernelsize:
 
@@ -98,7 +103,8 @@ De volgende indicatie en motivatie voor het aantal units/filters/kernelsize:
 3 naar 2 dimensies?: Door middel van 'flatten'
 
 Ik verwacht onderstaand architectuur als meest veelbelovende:
-Een RNN en dan wel de GRU variant. GRU gebruikt minder trainingsparameters en gebruikt zoals gezegd minder geheugen en voert sneller uit dan LSTM, terwijl LSTM nauwkeuriger is op een grotere dataset. De dataset is niet groot en simpel, waardoor LSTM niet nodig is.
+Een RNN en dan wel de GRU variant. GRU gebruikt minder trainingsparameters, minder geheugen en is sneller dan dan LSTM. Terwijl LSTM nauwkeuriger is op een grotere dataset. De gebruikte dataset is niet groot en simpel, waardoor LSTM niet nodig is. Tot slot kan een GRU goed omgaan met de volgordelijkheid in data.
+
 
 
 
