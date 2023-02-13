@@ -126,9 +126,9 @@ Hieronder een voorbeeld hoe je een plaatje met caption zou kunnen invoegen.
 </figure>
 
 ## <span style="color:Green">Antwoord 1d</span>
-Model.py en Settings.py aangepast voor het GRU model. Daarnaast gekozen om een nieuw script (model_GRU_design) te maken. Hierdoor kan mijn collega zijn eigen script nog teruglezen ter lering en vermaak. Verder de *Makefile* aangepast om het model te kunnen runnen met bestaand commando.
+Model.py en settings.py aangepast om het GRU model te laten werken. Daarnaast gekozen om een nieuw script (01_model_GRU_design) te maken. Hierdoor kan de junior collega zijn eigen script nog teruglezen ter lering en vermaak. Verder de *Makefile* aangepast om het model te kunnen runnen met bestaande commando's.
 
-Wat opvalt is dat bij de 3e run al een accuracy van 96% wordt gehaald.Dit model bevat een hidden size van 256, 4 layers en een dropout van 0.2. Dit model heb ik uiteindelijk nogmaals gerund en werd zelfs een accaracy van **97%** gehaald. 
+Wat opvalt is dat bij de 3e run al een accuracy van 96% wordt gehaald.Dit model bevat een hidden size van 256, 4 layers en een dropout van 0.2. Dit model heb ik uiteindelijk nogmaals gerund en daarbij werd een accuracy van **97%** gehaald. 
 
 Verder ben ik een klein beetje doorgeslagen met het aantal runs. Dit is vooral een leerpunt voormijzelf. Niet te lang handmatig tunen. 
 
@@ -150,7 +150,7 @@ hidden_size=256, num_layers=3, dropout=0.2
 - Accuraatheid 0,95. input=13, output=20, 
 hidden_size=128, num_layers=2, dropout=0.2
 
-In het Tensorboard overzichtplaatje hieronder valt te zien dat de runs bestaan uit 50 epochs. We zie rond 20 a 30 epochs verzadiging ontstaan. 
+In het Tensorboard overzichtplaatje hieronder valt te zien dat de runs bestaan uit 50 epochs. We zie rond 20 a 30 epochs verzadiging ontstaan. De loss buigt hierbij omhoog en de accuracy neemt niet meer toe of daalt. Ook valt op dat de learningrate in sommige gevallen stijl daalt. Dit komt door de instelling patience die op 10 epochs is gezet door de junior collega. Na 10 epoch zonder leren wordt de learningrate gewijzigd.
 
 
 
@@ -168,7 +168,7 @@ Implementeer de hypertuning voor jouw architectuur:
 - Licht je keuzes toe: wat hypertune je, en wat niet? Waarom? En in welke ranges zoek je, en waarom? Zie ook de [docs van ray over search space](https://docs.ray.io/en/latest/tune/api_docs/search_space.html#tune-sample-docs) en voor [rondom search algoritmes](https://docs.ray.io/en/latest/tune/api_docs/suggestion.html#bohb-tune-search-bohb-tunebohb) voor meer opties en voorbeelden.
 
 ## <span style="color:Green">Antwoord 2a</span>
-Tune.py en settings.py (onder scripts) aangepast voor het GRU model.
+02_tune.py en settings.py (onder scripts) aangepast voor het GRU model.
 
 Settings:<br>
 Class GRUmodelConfig(BaseSearchSpace):<br>
@@ -188,6 +188,13 @@ Class GRUmodelSearchSpace(BaseSearchSpace):<br>
 - reflecteer op de hypertuning. Wat werkt wel, wat werkt niet, wat vind je verrassend, wat zijn trade-offs die je ziet in de hypertuning, wat zijn afwegingen bij het kiezen van een uiteindelijke hyperparametersetting.
 
 Importeer de afbeeldingen in jouw antwoorden, reflecteer op je experiment, en geef een interpretatie en toelichting op wat je ziet.
+
+Run 2:<b>
+class GRUmodelSearchSpace(BaseSearchSpace):
+    hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256)
+    num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 4)
+    dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.1, 0.3)
+    batchsize: Union[int, SAMPLE_INT] = tune.randint(50, 200)
 
 ### 2c
 - Zorg dat jouw prijswinnende settings in een config komen te staan in `settings.py`, en train daarmee een model met een optimaal aantal epochs, daarvoor kun je `01_model_design.py` kopieren en hernoemen naar `2c_model_design.py`.
