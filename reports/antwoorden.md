@@ -85,7 +85,17 @@ Omdat jij de cursus Machine Learning hebt gevolgd kun jij hem uitstekend uitlegg
 
 ## <span style="color:Green">Antwoord 1c</span>
 Het betreft een datasetset met time series, drie dimensies en een classificatieprobleem. Als we het schema en recap uit de cursus ML volgen dan komen we uit op RNN (recurrent neural networks) architecturen. Hierbij hebben we de keuze tussen:
-Simple RNN, LSTM en GRU.  
+Simple RNN, LSTM en GRU.  Zie ook de aantekeningen vanuit de cursus Machine Learning.
+
+<figure>
+  <p align = "center">
+    <img src="img/Tekening.png" style="width:40%">
+    <figcaption align="center">
+      <b> Fig 1.Aantekingen Recap Les 4</b>
+    </figcaption>
+  </p>
+</figure>
+
 
 De volgende architectuur zal ik overwegen:
 GRU met 3 of 4 layers of een LSTM met 3 of 4 layers.
@@ -103,7 +113,8 @@ De volgende indicatie en motivatie voor het aantal units/filters/kernelsize:
 3 naar 2 dimensies?: Door middel van 'flatten'
 
 Ik verwacht onderstaand architectuur als meest veelbelovende:
-Een RNN en dan wel de GRU variant. GRU gebruikt minder trainingsparameters, minder geheugen en is sneller dan dan LSTM. Terwijl LSTM nauwkeuriger is op een grotere dataset. De gebruikte dataset is niet groot en simpel, waardoor LSTM niet nodig is. Tot slot kan een GRU goed omgaan met de volgordelijkheid in data.
+Een RNN en dan wel de GRU variant. We hebben 'geheugen nodig'. Geheugen is nodig vanaf 10/15 stappen. 
+ GRU gebruikt minder trainingsparameters, minder geheugen en is sneller dan dan LSTM. Terwijl LSTM nauwkeuriger is op een grotere dataset. De GRU is een versimpelde versie van de LSTM. De gebruikte dataset is niet groot, relatief simper en geen lange tijdreeks, waardoor LSTM niet nodig is. Tot slot, een GRU kan goed omgaan met de volgordelijkheid in data.
 
 
 
@@ -120,16 +131,6 @@ Implementeer jouw veelbelovende model:
 - Rapporteer je bevindingen. Ga hier niet te uitgebreid hypertunen (dat is vraag 2), maar rapporteer (met een afbeelding in `antwoorden/img` die je linkt naar jouw .md antwoord) voor bijvoorbeeld drie verschillende parametersets hoe de train/test loss curve verloopt.
 - reflecteer op deze eerste verkenning van je model. Wat valt op, wat vind je interessant, wat had je niet verwacht, welk inzicht neem je mee naar de hypertuning.
 
-Hieronder een voorbeeld hoe je een plaatje met caption zou kunnen invoegen.
-
-<figure>
-  <p align = "center">
-    <img src="img/motivational.png" style="width:50%">
-    <figcaption align="center">
-      <b> Fig 1.Een motivational poster voor studenten Machine Learning (Stable Diffusion)</b>
-    </figcaption>
-  </p>
-</figure>
 
 ## <span style="color:Green">Antwoord 1d</span>
 Model.py en settings.py aangepast om het GRU model te laten werken. Daarnaast gekozen om een nieuw script (01_model_GRU_design) te maken. Hierdoor kan de junior collega zijn eigen script nog teruglezen ter lering en vermaak. Verder de *Makefile* aangepast om het model te kunnen runnen met bestaande commando's.
@@ -156,11 +157,38 @@ hidden_size=256, num_layers=3, dropout=0.2
 - Accuraatheid 0,95. input=13, output=20, 
 hidden_size=128, num_layers=2, dropout=0.2
 
-In het Tensorboard overzichtplaatje hieronder valt te zien dat de runs bestaan uit 50 epochs. We zie rond 20 a 30 epochs verzadiging ontstaan. De loss buigt hierbij omhoog en de accuracy neemt niet meer toe of daalt. Ook valt op dat de learningrate in sommige gevallen stijl daalt. Dit komt door de instelling patience die op 10 epochs is gezet door de junior collega. Na 10 epoch zonder leren wordt de learningrate gewijzigd.
+In het Tensorboard overzicht bij fig 2 valt te zien dat de runs bestaan uit 50 epochs. We zie rond 20 a 30 epochs verzadiging ontstaan. De loss (fig 3) buigt hierbij liicht omhoog en de accuracy neemt niet meer toe of daalt. Ook valt op dat de learningrate in sommige gevallen stijl daalt. Dit komt door de instelling patience die op 10 epochs is gezet door de junior collega. Na 10 epoch zonder leren wordt de learningrate gewijzigd. Hierbij is het goed om te kijken naar het verschil tussen de train en testset. Er is een duidelijk verschil in de loss lijn te zien. Dit is o.a. te verklaren doordat de testset werkt met 'ongeziene' data.
 
+<figure>
+  <p align = "center">
+    <img src="img/Learningrate_Acc.png" style="width:100%">
+    <figcaption align="center">
+      <b> Fig 2.Learningrate en accuracy Tensorboard</b>
+    </figcaption>
+  </p>
+</figure>
+  
 
+<figure>
+  <p align = "center">
+    <img src="img/Loss.png" style="width:75%">
+    <figcaption align="center">
+      <b> Fig 3.Loss Test</b>
+    </figcaption>
+  </p>
+</figure>
 
+<figure>
+  <p align = "center">
+    <img src="img/LossTrain.png" style="width:75%">
+    <figcaption align="center">
+      <b> Fig 4.Loss Train</b>
+    </figcaption>
+  </p>
+</figure>
 
+---
+---
 ## Vraag 2
 Een andere collega heeft alvast een hypertuning opgezet in `dev/scripts/02_tune.py`.
 
@@ -188,19 +216,82 @@ Class GRUmodelSearchSpace(BaseSearchSpace):<br>
     dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.0, 0.5)<br>
     batchsize: Union[int, SAMPLE_INT] = tune.randint(32, 256)<br>
     
-
+---
 ### 2b
 - Analyseer de resultaten van jouw hypertuning; visualiseer de parameters van jouw hypertuning en sla het resultaat van die visualisatie op in `reports/img`. Suggesties: `parallel_coordinates` kan handig zijn, maar een goed gekozen histogram of scatterplot met goede kleuren is in sommige situaties duidelijker! Denk aan x en y labels, een titel en units voor de assen.
 - reflecteer op de hypertuning. Wat werkt wel, wat werkt niet, wat vind je verrassend, wat zijn trade-offs die je ziet in de hypertuning, wat zijn afwegingen bij het kiezen van een uiteindelijke hyperparametersetting.
 
 Importeer de afbeeldingen in jouw antwoorden, reflecteer op je experiment, en geef een interpretatie en toelichting op wat je ziet.
 
-Run 2:<b>
-class GRUmodelSearchSpace(BaseSearchSpace):
+Run 1:
+class GRUmodelSearchSpace(BaseSearchSpace):  
+    hidden_size: Union[int, SAMPLE_INT] = tune.randint(64, 256)
+    num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 6)
+    dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.1, 0.3)
+    batchsize: Union[int, SAMPLE_INT] = tune.randint(50, 250)
+
+Run 2:
+class GRUmodelSearchSpace(BaseSearchSpace):  
     hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256)
     num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 4)
     dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.1, 0.3)
+    batchsize: Union[int, SAMPLE_INT] = tune.randint(32, 250)
+
+
+   Het verraste mij bij de 2e run dat de resultaten met 2 en 3 layers een hogere accuraaatheid zouden hebben dan met 4 layers. Wat daarbij wel gezegd moet worden is dat een model met 4 layers nog niet uitgeleerd leek te zijn en 3 layers al wel bij 10. Aangezien bij 3 de loss al omhoog begon te buigen en de accuracy niet meer steeg of juist afnam. Wat bleek tot mijn verbazing. Bij de 2e run was de 4e layer niet meegenomen. Door instelling: tune.randint(2, 4) Zoals te zien valt in fig. 5. (Op de X as het aantal Epochs).
+
+   <figure>
+  <p align = "center">
+    <img src="img/Hypertune_2.png" style="width:100%">
+    <figcaption align="center">
+      <b> Fig 5.`overzicht run2'</b>
+    </figcaption>
+  </p>
+</figure>
+  
+  De hidden size zit zoals verwacht boven de 200 en richting de 256 zoals bij vraag 1 naar boven is gekomen. Tussen de layers zat een groot verschil qua ideale instelling voor de batchsize en dropout. Zie de `parallel_coordinates` figuur 3 en 4 hieronder. 
+
+<figure>
+  <p align = "center">
+    <img src="img/ray1.png" style="width:100%">
+    <figcaption align="center">
+      <b> Fig 5.`parallel_coordinates run1'</b>
+    </figcaption>
+  </p>
+</figure>
+
+<figure>
+  <p align = "center">
+    <img src="img/ray2.png" style="width:100%">
+    <figcaption align="center">
+      <b> Fig 6.`parallel_coordinates run2'</b>
+    </figcaption>
+  </p>
+</figure>
+
+Om de verschillen verder uit te splitsen ben ik o.a. gaan draaien met meer Epochs.
+Bij run 5 30 Epochs en de volgende variabelen:
+class GRUmodelSearchSpace(BaseSearchSpace):
+    hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256)
+    num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 5)
+    dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.15, 0.2)
     batchsize: Union[int, SAMPLE_INT] = tune.randint(50, 200)
+
+Hierbij zie je duidelijk een verschil ontstaan en valt de variant met 2 layers weg ten opzichte van 3 layers als we naar Accuracy kijken. Opvallend vind ik nog steeds dat 3 layers beter presteert dan de variant met 4 layers. Mooi om te zien is dat de dropout en batsize meer is gegroepeerd.
+
+<figure>
+  <p align = "center">
+    <img src="img/ray5.png" style="width:100%">
+    <figcaption align="center">
+      <b> Fig 7.`parallel_coordinates run5'</b>
+    </figcaption>
+  </p>
+</figure>
+
+
+Om het een en ander uit te sluiten draai ik nog een laatste run op 50 epoch: Run6
+
+---
 
 ### 2c
 - Zorg dat jouw prijswinnende settings in een config komen te staan in `settings.py`, en train daarmee een model met een optimaal aantal epochs, daarvoor kun je `01_model_design.py` kopieren en hernoemen naar `2c_model_design.py`.
