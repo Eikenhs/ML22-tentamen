@@ -1,0 +1,9 @@
+{
+  "batchsize": 82,
+  "dropout": 0.15168553543709343,
+  "hidden_size": 246,
+  "input": 13,
+  "num_layers": 2,
+  "output": 20,
+  "tunedir": "/home/azureuser/code/ML22-tentamen/logs"
+}
