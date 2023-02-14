@@ -1,0 +1,5 @@
+2023-02-14 09:49:35.747 | INFO     | tentamen.data.data_tools:get_file:61 - File /home/azureuser/code/ML22-tentamen/data/raw/ArabicTrain.txt already exists, skip download
+2023-02-14 09:49:35.747 | INFO     | tentamen.data.data_tools:get_file:61 - File /home/azureuser/code/ML22-tentamen/data/raw/ArabicTest.txt already exists, skip download
+2023-02-14 09:49:35.748 | INFO     | tentamen.data.datasets:get_arabic:34 - Loading data from /home/azureuser/code/ML22-tentamen/data/raw/ArabicTrain.txt and /home/azureuser/code/ML22-tentamen/data/raw/ArabicTest.txt
+2023-02-14 09:49:36.639 | INFO     | tentamen.data.datasets:get_arabic:50 - Returning trainstreamer, teststreamer
+2023-02-14 09:49:36.647 | INFO     | tentamen.train:dir_add_timestamp:159 - Logging to /home/azureuser/code/ML22-tentamen/final/20230214-0949
