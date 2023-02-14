@@ -65,5 +65,5 @@ class GRUmodelSearchSpace(BaseSearchSpace):
     hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256)
     num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 5)
     dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.15, 0.3)
-    batchsize: Union[int, SAMPLE_INT] = tune.randint(50, 200)
+    batchsize: Union[int, SAMPLE_INT] = tune.randint(150, 200)
     
