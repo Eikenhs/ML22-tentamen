@@ -1,3 +1,7 @@
+# Stephan Eikenhorst
+Opdracht Machine Learning
+
+
 ```
 ├── README.md       <- this file
 ├── data            <- store your data here
