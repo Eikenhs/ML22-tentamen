@@ -116,10 +116,6 @@ Ik verwacht onderstaand architectuur als meest veelbelovende:
 Een RNN en dan wel de GRU variant. We hebben 'geheugen nodig'. Geheugen is nodig vanaf 10/15 stappen. 
  GRU gebruikt minder trainingsparameters, minder geheugen en is sneller dan dan LSTM. Terwijl LSTM nauwkeuriger is op een grotere dataset. De GRU is een versimpelde versie van de LSTM. De gebruikte dataset is niet groot, relatief simper en geen lange tijdreeks, waardoor LSTM niet nodig is. Tot slot, een GRU kan goed omgaan met de volgordelijkheid in data.
 
-
-
-
-
 ---
 
 ### 1d
@@ -237,7 +233,6 @@ class GRUmodelSearchSpace(BaseSearchSpace):
     dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.1, 0.3)
     batchsize: Union[int, SAMPLE_INT] = tune.randint(32, 250)
 
-
    Het verraste mij bij de 2e run dat de resultaten met 2 en 3 layers een hogere accuraaatheid zouden hebben dan met 4 layers. Wat daarbij wel gezegd moet worden is dat een model met 4 layers nog niet uitgeleerd leek te zijn en 3 layers al wel bij 10. Aangezien bij 3 de loss al omhoog begon te buigen en de accuracy niet meer steeg of juist afnam. Wat bleek tot mijn verbazing. Bij de 2e run was de 4e layer niet meegenomen. Door instelling: tune.randint(2, 4) Zoals te zien valt in fig. 5. (Op de X as het aantal Epochs).
 
    <figure>
@@ -313,10 +308,13 @@ Deze run bevestigt nogmaals dat de 3 layers en relatief hoge hidden size de juis
 - Zorg dat jouw prijswinnende settings in een config komen te staan in `settings.py`, en train daarmee een model met een optimaal aantal epochs, daarvoor kun je `01_model_design.py` kopieren en hernoemen naar `2c_model_design.py`.
 
 ## <span style="color:Green">Antwoord 2c</span>
-Tot slot heb ik de prijswinnende setting gedraaid:<br>
+Tot slot heb ik de prijswinnende setting gedraaid:<br><br>
 input=13 <br> output=20<br> hidden_size=248 <br> num_layers=3 <br> dropout=0.159 <br> batchsize=122 <br> learning rate= 1e -3 <br> epochs=25
 
-Met deze setting is een accuracy behaald van boven de 96%.<b>
+Met deze setting is een accuracy behaald van boven de 96%!<br>
+0,9677 om precies te zijn. Dit schuurt tegen experiment nummer 1 aan. De educated guess bij 1d was zo slecht nog niet.<br>
+
+Hieronder in fig. 9 nog een laatste visualisatie, waarin de loss en accuracy van de prijswinnende setting wordt getoond.
 
 <figure>
   <p align = "center">
@@ -328,6 +326,7 @@ Met deze setting is een accuracy behaald van boven de 96%.<b>
 </figure>
 
 
+*Persoonlijke conclusie: Met deze iteraties uiteindelijk tot een mooi neuraal netwerk gekomen. Hiermee hoop ik de 'junior' te hebben geholpen. Een belangrijke bijvangst is mijn eigen ontwikkeling tijdens dit traject. Het hypertunen was een behoorlijke uitdaging en heeft uiteindelijk veel meer tijd gekost dan initieel de bedoeling was. Het bijhouden van de settings en een duidelijk plan van aanpak zijn de belangrijkste learnings die ik hieruit meeneem.*
 
 
 ---
