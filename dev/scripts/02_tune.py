@@ -9,7 +9,7 @@ from ray.tune.schedulers.hb_bohb import HyperBandForBOHB
 from ray.tune.search.bohb import TuneBOHB
 
 from tentamen.data import datasets
-from tentamen.model import Accuracy, GRUmodel #Linearmodel verwijderd
+from tentamen.model import Accuracy, GRUmodel  # Linearmodel verwijderd
 from tentamen.settings import GRUmodelSearchSpace, presets
 from tentamen.train import trainloop
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         output=20,
         tunedir=presets.logdir,
     )
-#LinearSearchSpace vervangen voor GRUmodelSearchSpace
+    # LinearSearchSpace vervangen voor GRUmodelSearchSpace
 
     reporter = CLIReporter()
     reporter.add_metric_column("Accuracy")

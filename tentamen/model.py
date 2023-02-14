@@ -45,7 +45,8 @@ class Accuracy:
         the correct class.
         """
         return (yhat.argmax(dim=1) == y).sum() / len(yhat)
-    
+
+
 class GRUmodel(nn.Module):
     def __init__(
         self,
