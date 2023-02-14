@@ -135,7 +135,7 @@ Implementeer jouw veelbelovende model:
 ## <span style="color:Green">Antwoord 1d</span>
 Model.py en settings.py aangepast om het GRU model te laten werken. Daarnaast gekozen om een nieuw script (01_model_GRU_design) te maken. Hierdoor kan de junior collega zijn eigen script nog teruglezen ter lering en vermaak. Verder de *Makefile* aangepast om het model te kunnen runnen met bestaande commando's.
 
-Wat opvalt is dat bij de 3e run al een accuracy van 96% wordt gehaald.Dit model bevat een hidden size van 256, 4 layers en een dropout van 0.2. Dit model heb ik uiteindelijk nogmaals gerund en daarbij werd een accuracy van **97%** gehaald. 
+Wat opvalt is dat bij de 3e run al een accuracy van **97%** wordt gehaald.Dit model bevat een hidden size van 256, 4 layers en een dropout van 0.2. 
 
 Verder ben ik een klein beetje doorgeslagen met het aantal runs. Dit is vooral een leerpunt voormijzelf. Niet te lang handmatig tunen. 
 
@@ -144,9 +144,9 @@ De volgende resultaten zijn het opvallendste en per aantal layers gesorteerd.
 4 Layers:
 - Accuraatheid 0,94. input=13, output=20,
 hidden_size=64, num_layers=4, dropout=0.2
-- Accuraatheid 0,944. input=13, output=20,
+- Accuraatheid 0,94. input=13, output=20,
 hidden_size=128, num_layers=4, dropout=0.2
-- Accuraatheid 0,970. input=13, output=20,
+- Accuraatheid 0,97. input=13, output=20,
 hidden_size=256, num_layers=4, dropout=0.2
 
 3 Layers:
@@ -289,18 +289,49 @@ Hierbij zie je duidelijk een verschil ontstaan en valt de variant met 2 layers w
 </figure>
 
 
-Om het een en ander uit te sluiten draai ik nog een laatste run op 50 epoch: Run6
+Om het een en ander uit te sluiten draai ik nog een laatste run met 55 epochs:
 class GRUmodelSearchSpace(BaseSearchSpace):
-    hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256)
-    num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 5)
-    dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.15, 0.3)
-    batchsize: Union[int, SAMPLE_INT] = tune.randint(150, 200)
+hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256) <br>
+num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 5) <br>
+dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.15, 0.3) <br> 
+batchsize: Union[int, SAMPLE_INT] = tune.randint(150, 200) <br>
 
+Deze run bevestigt nogmaals dat de 3 layers en relatief hoge hidden size de juiste settings zijn. Zie ook fig 8. De groene lijn bevat de beste accuraatheid.
+
+<figure>
+  <p align = "center">
+    <img src="img/55 epoch.png" style="width:100%">
+    <figcaption align="center">
+      <b> Fig 8.`parallel_coordinates 55 epoch'</b>
+    </figcaption>
+  </p>
+</figure>
 
 ---
 
 ### 2c
 - Zorg dat jouw prijswinnende settings in een config komen te staan in `settings.py`, en train daarmee een model met een optimaal aantal epochs, daarvoor kun je `01_model_design.py` kopieren en hernoemen naar `2c_model_design.py`.
+
+## <span style="color:Green">Antwoord 2c</span>
+Tot slot heb ik de prijswinnende setting gedraaid:<br>
+input=13 <br> output=20<br> hidden_size=248 <br> num_layers=3 <br> dropout=0.159 <br> batchsize=122 <br> learning rate= 1e -3 <br> epochs=25
+
+Met deze setting is een accuracy behaald van boven de 96%.<b>
+
+<figure>
+  <p align = "center">
+    <img src="img/Final.png" style="width:40%">
+    <figcaption align="center">
+      <b> Fig 9 Resultaat prijswinnend model.'</b>
+    </figcaption>
+  </p>
+</figure>
+
+
+
+
+---
+---
 
 ## Vraag 3
 ### 3a
