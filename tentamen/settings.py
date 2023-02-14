@@ -30,9 +30,9 @@ presets = Settings(
     testfile=Path("ArabicTest.txt"),
     trainfile=Path("ArabicTrain.txt"),
     modeldir=root / "models",
-    logdir=root / "run6",
+    logdir=root / "final",
     modelname="model.pt",
-    batchsize=128,
+    batchsize=122,
 )
 
 
@@ -65,5 +65,5 @@ class GRUmodelSearchSpace(BaseSearchSpace):
     hidden_size: Union[int, SAMPLE_INT] = tune.randint(128, 256)
     num_layers: Union[int, SAMPLE_INT] = tune.randint(2, 5)
     dropout: Union[float, SAMPLE_FLOAT] = tune.uniform(0.15, 0.3)
-    batchsize: Union[int, SAMPLE_INT] = tune.randint(150, 200)
+    batchsize: Union[int, SAMPLE_INT] = tune.randint(100, 200)
     
