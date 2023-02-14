@@ -98,9 +98,9 @@ Simple RNN, LSTM en GRU.  Zie ook de aantekeningen vanuit de cursus Machine Lear
 
 
 De volgende architectuur zal ik overwegen:
-GRU met 3 of 4 layers of een LSTM met 3 of 4 layers.
+GRU met 3 of 4 layers of een LSTM met 3 of 4 layers en eindigen met een linear layer.
 
-Hierbij gebruiken we de volgende layers: input - GRU - output. Of input-LSTM-output.
+In het kort de volgende layers: input - GRU - output. Of input-LSTM-output.
 
 De volgende indicatie en motivatie voor het aantal units/filters/kernelsize:
 
@@ -218,6 +218,7 @@ Class GRUmodelSearchSpace(BaseSearchSpace):<br>
 - reflecteer op de hypertuning. Wat werkt wel, wat werkt niet, wat vind je verrassend, wat zijn trade-offs die je ziet in de hypertuning, wat zijn afwegingen bij het kiezen van een uiteindelijke hyperparametersetting.
 
 Importeer de afbeeldingen in jouw antwoorden, reflecteer op je experiment, en geef een interpretatie en toelichting op wat je ziet.
+## <span style="color:Green">Antwoord 2b</span>
 
 Run 1:
 class GRUmodelSearchSpace(BaseSearchSpace):  

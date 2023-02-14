@@ -1,9 +1,0 @@
-{
-  "batchsize": 178,
-  "dropout": 0.16552615785588182,
-  "hidden_size": 205,
-  "input": 13,
-  "num_layers": 4,
-  "output": 20,
-  "tunedir": "/home/azureuser/code/ML22-tentamen/run6"
-}
